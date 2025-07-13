@@ -1,0 +1,15 @@
+fastapi==0.104.1
+uvicorn==0.24.0
+transformers==4.36.0
+torch==2.1.0
+accelerate==0.24.1
+pydantic==2.5.0
+numpy==1.24.3
+asyncio-mqtt==0.16.1
+aiofiles==23.2.1
+psutil==5.9.6
+loguru==0.7.2
+click==8.1.7
+pytest==7.4.3
+aiohttp==3.9.0
+requests==2.31.0
