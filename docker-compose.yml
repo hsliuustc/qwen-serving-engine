@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  qwen-serving-engine:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_NAME=Qwen/Qwen-7B-Chat
+      - DEVICE=cuda
+      - MAX_BATCH_SIZE=32
+      - MAX_WAITING_TOKENS=20
+      - BLOCK_SIZE=16
+      - MAX_CACHED_BLOCKS=2048
+      - LOG_LEVEL=info
+    volumes:
+      - ./models:/app/models  # Optional: mount local model cache
+      - ./logs:/app/logs      # Optional: mount logs directory
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
